@@ -124,4 +124,94 @@ public final class ApplicationTest {
     private boolean stillRunning() {
         return applicationThread != null && applicationThread.isAlive();
     }
+
+    @Test(timeout = 1000) public void AddProject() throws IOException {
+        execute("add project testProject");
+        execute("show");
+        readLines("testProject",
+                ""
+        );
+        execute("quit");
+    }
+
+    @Test(timeout = 1000) public void AddTask() throws IOException {
+        execute("add project testProject");
+        execute("add task testProject testTask");
+        execute("show");
+        readLines("testProject",
+                "    [ ] 1: testTask",
+                ""
+        );
+        execute("quit");
+    }
+
+    @Test(timeout = 1000) public void AddTaskButNoProject() throws IOException {
+        execute("add task testProject testTask");
+        readLines("Could not find a project with the name \"testProject\".");
+        execute("quit");
+    }
+
+    @Test(timeout = 1000) public void CheckTask() throws IOException {
+        execute("add project testProject");
+        execute("add task testProject testTask");
+        execute("check 1");
+        execute("show");
+        readLines("testProject",
+                "    [x] 1: testTask",
+                ""
+        );
+        execute("quit");
+    }
+
+    @Test(timeout = 1000) public void CheckTaskButNoTask() throws IOException {
+        execute("add project testProject");
+        execute("check 1");
+        readLines("Could not find a task with an ID of 1.");
+        execute("quit");
+    }
+
+    @Test(timeout = 1000) public void UncheckTask() throws IOException {
+        execute("add project testProject");
+        execute("add task testProject testTask");
+        execute("check 1");
+        execute("show");
+        readLines("testProject",
+                "    [x] 1: testTask",
+                ""
+        );
+        execute("uncheck 1");
+        execute("show");
+        readLines("testProject",
+                "    [ ] 1: testTask",
+                ""
+        );
+        execute("quit");
+    }
+
+    @Test(timeout = 1000) public void UncheckTaskButNoTask() throws IOException {
+        execute("add project testProject");
+        execute("uncheck 1");
+        readLines("Could not find a task with an ID of 1.");
+        execute("quit");
+    }
+
+    @Test(timeout = 1000) public void UseHelp() throws IOException {
+        execute("help");
+
+        readLines("Commands:",
+                "  show",
+                "  add project <project name>",
+                "  add task <project name> <task description>",
+                "  check <task ID>",
+                "  uncheck <task ID>",
+                ""
+        );
+        execute("quit");
+    }
+
+    @Test(timeout = 1000) public void UndefinedCommand() throws IOException {
+        execute("-h");
+        readLines("I don't know what the command \"-h\" is.");
+        execute("quit");
+    }
 }
