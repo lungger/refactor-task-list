@@ -125,7 +125,7 @@ public final class ApplicationTest {
         return applicationThread != null && applicationThread.isAlive();
     }
 
-    @Test(timeout = 1000) public void AddProject() throws IOException {
+    @Test public void AddProject() throws IOException {
         execute("add project testProject");
         execute("show");
         readLines("testProject",

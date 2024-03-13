@@ -1,5 +1,12 @@
 package com.codurance.training.tasks;
 
+import TaskList.Configuration.AppConfiguration;
+import TaskList.Entity.Task;
+import TaskList.UseCase.AddProjectUseCase;
+import TaskList.UseCase.AddTaskUseCase;
+import TaskList.UseCase.CheckAndUnCheckUseCase;
+import TaskList.UseCase.ShowUseCase;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,6 +25,8 @@ public final class TaskList implements Runnable {
 
     private long lastId = 0;
 
+    private AppConfiguration configuration;
+
     public static void main(String[] args) throws Exception {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter out = new PrintWriter(System.out);
@@ -27,6 +36,7 @@ public final class TaskList implements Runnable {
     public TaskList(BufferedReader reader, PrintWriter writer) {
         this.in = reader;
         this.out = writer;
+        this.configuration = new AppConfiguration();
     }
 
     public void run() {
@@ -72,13 +82,9 @@ public final class TaskList implements Runnable {
     }
 
     private void show() {
-        for (Map.Entry<String, List<Task>> project : tasks.entrySet()) {
-            out.println(project.getKey());
-            for (Task task : project.getValue()) {
-                out.printf("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
-            }
-            out.println();
-        }
+        ShowUseCase useCase = configuration.getShowUseCase();
+        String result = useCase.execute();
+        out.printf(result);
     }
 
     private void add(String commandLine) {
@@ -93,39 +99,35 @@ public final class TaskList implements Runnable {
     }
 
     private void addProject(String name) {
-        tasks.put(name, new ArrayList<Task>());
+        AddProjectUseCase useCase = configuration.getAddProjectUseCase();
+        useCase.execute(name);
     }
 
     private void addTask(String project, String description) {
-        List<Task> projectTasks = tasks.get(project);
-        if (projectTasks == null) {
-            out.printf("Could not find a project with the name \"%s\".", project);
+        AddTaskUseCase useCase = configuration.getAddTaskUseCase();
+        String message = useCase.execute(project, description, nextId());
+        if (message != null) {
+            out.printf(message);
             out.println();
-            return;
         }
-        projectTasks.add(new Task(nextId(), description, false));
     }
 
     private void check(String idString) {
-        setDone(idString, true);
+        CheckAndUnCheckUseCase useCase = configuration.getCheckAndUnCheckUseCase();
+        String message = useCase.execute(Integer.parseInt(idString), true);
+        if (message != null) {
+            out.printf(message);
+            out.println();
+        }
     }
 
     private void uncheck(String idString) {
-        setDone(idString, false);
-    }
-
-    private void setDone(String idString, boolean done) {
-        int id = Integer.parseInt(idString);
-        for (Map.Entry<String, List<Task>> project : tasks.entrySet()) {
-            for (Task task : project.getValue()) {
-                if (task.getId() == id) {
-                    task.setDone(done);
-                    return;
-                }
-            }
+        CheckAndUnCheckUseCase useCase = configuration.getCheckAndUnCheckUseCase();
+        String message = useCase.execute(Integer.parseInt(idString), false);
+        if (message != null) {
+            out.printf(message);
+            out.println();
         }
-        out.printf("Could not find a task with an ID of %d.", id);
-        out.println();
     }
 
     private void help() {
