@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintWriter;
-
-import Commands.Add;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +38,6 @@ public final class ApplicationTest {
 
     @After public void
     kill_the_application() throws IOException, InterruptedException {
-        Add.resetLastId();
         if (!stillRunning()) {
             return;
         }
