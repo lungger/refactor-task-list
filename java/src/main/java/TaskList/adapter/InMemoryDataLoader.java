@@ -1,12 +1,12 @@
-package TaskList.Repository;
+package TaskList.adapter;
 
-import TaskList.Entity.Project;
-import TaskList.Entity.Task;
-import TaskList.UseCase.GetProject;
-import TaskList.UseCase.ShowList;
+import TaskList.entity.Project;
+import TaskList.entity.ProjectName;
+import TaskList.entity.Task;
+import TaskList.useCase.GetProject;
+import TaskList.useCase.ShowList;
 
 import java.util.List;
-import java.util.Map;
 
 import static java.lang.System.lineSeparator;
 
@@ -18,7 +18,7 @@ public class InMemoryDataLoader implements GetProject, ShowList {
     }
 
     @Override
-    public Project getProject(String name) {
+    public Project getProject(ProjectName name) {
         for (Project project: projects) {
             if (project.getName().equals(name)) {
                 return project;
@@ -33,10 +33,19 @@ public class InMemoryDataLoader implements GetProject, ShowList {
     }
 
     @Override
+    public long getTheNumberOfAllProjectTasks() {
+        long result = 0;
+        for (Project project: projects) {
+            result += project.getTheNumberOfTask();
+        }
+        return result;
+    }
+
+    @Override
     public String showList() {
         String result = "";
         for (Project project: projects) {
-            result += project.getName() + lineSeparator();
+            result += project.getName().toString() + lineSeparator();
             for (Task task: project.getAllTask().values()) {
                 result += String.format("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
             }

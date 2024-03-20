@@ -1,6 +1,6 @@
-package TaskList.UseCase;
+package TaskList.useCase;
 
-import TaskList.Entity.Project;
+import TaskList.entity.Project;
 
 public interface AddProject {
     void addProject(Project project);

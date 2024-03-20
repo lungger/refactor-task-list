@@ -1,6 +1,6 @@
-package TaskList.UseCase;
+package TaskList.useCase;
 
-import TaskList.Entity.Project;
+import TaskList.entity.Project;
 
 import static java.lang.System.lineSeparator;
 
@@ -18,6 +18,6 @@ public class CheckAndUnCheckUseCase {
                 return null;
             }
         }
-        return "Could not find a task with an ID of " + id + ".";
+        return "Could not find a task with an ID of " + id + "." + lineSeparator();
     }
 }

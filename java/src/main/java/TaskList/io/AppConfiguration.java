@@ -1,14 +1,14 @@
-package TaskList.Configuration;
+package TaskList.io;
 
-import TaskList.Entity.Project;
-import TaskList.Repository.InMemoryDataLoader;
-import TaskList.Repository.InMemoryDataSetter;
-import TaskList.UseCase.*;
+import TaskList.entity.Project;
+import TaskList.adapter.InMemoryDataLoader;
+import TaskList.adapter.InMemoryDataSetter;
+import TaskList.useCase.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppConfiguration {
+public class AppConfiguration implements Configuration {
     private List<Project> projects = new ArrayList<>();
 
     public AddProjectUseCase getAddProjectUseCase() {

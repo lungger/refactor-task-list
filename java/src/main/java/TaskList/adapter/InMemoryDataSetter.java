@@ -1,7 +1,7 @@
-package TaskList.Repository;
+package TaskList.adapter;
 
-import TaskList.Entity.Project;
-import TaskList.UseCase.AddProject;
+import TaskList.entity.Project;
+import TaskList.useCase.AddProject;
 
 import java.util.List;
 

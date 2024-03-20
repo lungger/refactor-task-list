@@ -1,4 +1,4 @@
-package TaskList.UseCase;
+package TaskList.useCase;
 
 public class ShowUseCase {
     private ShowList showList;
