@@ -8,7 +8,7 @@ import TaskList.useCase.CheckAndUnCheckUseCase;
 import TaskList.useCase.ShowUseCase;
 
 public class Controller {
-    private Configuration configuration;
+    private final Configuration configuration;
     public Controller(Configuration configuration) {
         this.configuration = configuration;
     }
@@ -16,26 +16,19 @@ public class Controller {
     public String execute(String commandLine) {
         String[] commandRest = commandLine.split(" ", 2);
         String command = commandRest[0];
-        switch (command) {
-            case "show":
-                return show();
-            case "add":
-                return add(commandRest[1]);
-            case "check":
-                return check(commandRest[1]);
-            case "uncheck":
-                return uncheck(commandRest[1]);
-            case "help":
-                return help();
-            default:
-                return error(command);
-        }
+        return switch (command) {
+            case "show" -> show();
+            case "add" -> add(commandRest[1]);
+            case "check" -> check(commandRest[1]);
+            case "uncheck" -> uncheck(commandRest[1]);
+            case "help" -> help();
+            default -> error(command);
+        };
     }
 
     private String show() {
         ShowUseCase useCase = configuration.getShowUseCase();
-        String result = useCase.execute();
-        return result;
+        return useCase.execute();
     }
 
     private String add(String commandLine) {
@@ -57,21 +50,17 @@ public class Controller {
 
     private String addTask(String project, String description) {
         AddTaskUseCase useCase = configuration.getAddTaskUseCase();
-
-        String message = useCase.execute(ProjectName.of(project), description);
-        return message;
+        return useCase.execute(ProjectName.of(project), description);
     }
 
     private String check(String idString) {
         CheckAndUnCheckUseCase useCase = configuration.getCheckAndUnCheckUseCase();
-        String message = useCase.execute(Integer.parseInt(idString), true);
-        return message;
+        return useCase.execute(Integer.parseInt(idString), true);
     }
 
     private String uncheck(String idString) {
         CheckAndUnCheckUseCase useCase = configuration.getCheckAndUnCheckUseCase();
-        String message = useCase.execute(Integer.parseInt(idString), false);
-        return message;
+        return useCase.execute(Integer.parseInt(idString), false);
     }
 
     private String help() {
@@ -92,8 +81,7 @@ public class Controller {
     }
 
     private String error(String command) {
-        String message = "I don't know what the command \"" + command + "\" is." +
+        return "I don't know what the command \"" + command + "\" is." +
                 System.lineSeparator();
-        return message;
     }
 }

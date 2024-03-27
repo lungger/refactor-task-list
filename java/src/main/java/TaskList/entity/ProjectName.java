@@ -9,8 +9,4 @@ public record ProjectName(String value) {
     public String toString(){
         return value;
     }
-
-    public boolean equals(ProjectName name) {
-        return value.equals(name.toString());
-    }
 }

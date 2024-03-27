@@ -1,19 +1,20 @@
 package TaskList.adapter;
 
 import TaskList.entity.Project;
+import TaskList.entity.ToDoList;
 import TaskList.useCase.AddProject;
 
 import java.util.List;
 
 public class InMemoryDataSetter implements AddProject {
 
-    private List<Project> projects;
+    private ToDoList toDoList;
 
-    public InMemoryDataSetter(List<Project> projects) {
-        this.projects = projects;
+    public InMemoryDataSetter(ToDoList toDoList) {
+        this.toDoList = toDoList;
     }
     @Override
     public void addProject(Project project) {
-        projects.add(project);
+        toDoList.addProject(project);
     }
 }
