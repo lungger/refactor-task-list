@@ -1,16 +1,16 @@
 # Task List 
 
 
-## HW3
+## HW4
 
 Entity:
 
-1. 新增ProjectName
+1. 新增ToDoList
 
-Repositor改名成adapter:
+adapter:
 
-1. 新增Controller
+1. 修改使用List<Project>的變數成ToDoList
 
-Configuration改名成io:
+io:
 
-1. 將taskListApp移來這裡
+1. 修改使用List<Project>的變數成ToDoList
