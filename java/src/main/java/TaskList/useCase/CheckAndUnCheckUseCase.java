@@ -1,6 +1,7 @@
 package TaskList.useCase;
 
 import TaskList.entity.Project;
+import TaskList.entity.TaskId;
 
 import static java.lang.System.lineSeparator;
 
@@ -11,10 +12,10 @@ public class CheckAndUnCheckUseCase {
         this.getAllProject = getAllProject;
     }
 
-    public String execute(long id, boolean done) {
+    public String execute(String id, boolean done) {
         for (Project project: getAllProject.getAllProject()) {
-            if (project.checkTaskExist(id)) {
-                project.setTaskDone(id, done);
+            if (project.checkTaskExist(TaskId.of(id))) {
+                project.setTaskDone(TaskId.of(id), done);
                 return null;
             }
         }

@@ -48,7 +48,7 @@ public class InMemoryDataLoader implements GetProject, ShowList {
         for (Project project: toDoList.getProjects()) {
             result += project.getName() + lineSeparator();
             for (Task task: project.getAllTask().values()) {
-                result += String.format("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
+                result += String.format("    [%c] %s: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
             }
             result += lineSeparator();
         }

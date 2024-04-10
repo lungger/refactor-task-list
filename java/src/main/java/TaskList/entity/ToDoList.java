@@ -7,7 +7,10 @@ import java.util.List;
 public class ToDoList {
     private List<Project> projects = null;
 
-    public ToDoList() {
+    private final ToDoListId id;
+
+    public ToDoList(ToDoListId id) {
+        this.id = id;
         this.projects = new ArrayList<>();
     }
 

@@ -1,6 +1,7 @@
 package TaskList.useCase;
 
 import TaskList.entity.Project;
+import TaskList.entity.ProjectName;
 
 public class AddProjectUseCase {
     private AddProject addProject;
@@ -10,6 +11,6 @@ public class AddProjectUseCase {
     }
 
     public void execute(String name) {
-        addProject.addProject(new Project(name));
+        addProject.addProject(new Project(ProjectName.of(name)));
     }
 }

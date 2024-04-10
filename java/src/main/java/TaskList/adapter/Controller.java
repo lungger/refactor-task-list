@@ -55,12 +55,12 @@ public class Controller {
 
     private String check(String idString) {
         CheckAndUnCheckUseCase useCase = configuration.getCheckAndUnCheckUseCase();
-        return useCase.execute(Integer.parseInt(idString), true);
+        return useCase.execute(idString, true);
     }
 
     private String uncheck(String idString) {
         CheckAndUnCheckUseCase useCase = configuration.getCheckAndUnCheckUseCase();
-        return useCase.execute(Integer.parseInt(idString), false);
+        return useCase.execute(idString, false);
     }
 
     private String help() {
