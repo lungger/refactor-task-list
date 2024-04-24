@@ -1,4 +1,4 @@
-package TaskList.io;
+package TaskList.adapter;
 
 import TaskList.useCase.AddProjectUseCase;
 import TaskList.useCase.AddTaskUseCase;

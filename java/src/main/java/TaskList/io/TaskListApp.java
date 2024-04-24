@@ -1,12 +1,8 @@
 package TaskList.io;
 
+import TaskList.adapter.AppConfiguration;
 import TaskList.adapter.Controller;
-import TaskList.entity.ProjectName;
 import TaskList.entity.Task;
-import TaskList.useCase.AddProjectUseCase;
-import TaskList.useCase.AddTaskUseCase;
-import TaskList.useCase.CheckAndUnCheckUseCase;
-import TaskList.useCase.ShowUseCase;
 
 import java.io.BufferedReader;
 import java.io.IOException;

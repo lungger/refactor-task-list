@@ -1,14 +1,8 @@
-package TaskList.io;
+package TaskList.adapter;
 
-import TaskList.entity.Project;
-import TaskList.adapter.InMemoryDataLoader;
-import TaskList.adapter.InMemoryDataSetter;
 import TaskList.entity.ToDoList;
 import TaskList.entity.ToDoListId;
 import TaskList.useCase.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AppConfiguration implements Configuration {
     private static final ToDoListId DEFAULT_TO_DO_LIST_ID = ToDoListId.of("001");
@@ -20,8 +14,8 @@ public class AppConfiguration implements Configuration {
     }
 
     public AddTaskUseCase getAddTaskUseCase() {
-        GetProject getProject = new InMemoryDataLoader(toDoList);
-        return new AddTaskUseCase(getProject);
+        AddTask addTask = new InMemoryDataSetter(toDoList);
+        return new AddTaskUseCase(addTask);
     }
 
     public ShowUseCase getShowUseCase() {
@@ -30,7 +24,7 @@ public class AppConfiguration implements Configuration {
     }
 
     public CheckAndUnCheckUseCase getCheckAndUnCheckUseCase() {
-        GetProject getAllProject = new InMemoryDataLoader(toDoList);
-        return new CheckAndUnCheckUseCase(getAllProject);
+        SetTaskDone setTaskDone = new InMemoryDataSetter(toDoList);
+        return new CheckAndUnCheckUseCase(setTaskDone);
     }
 }

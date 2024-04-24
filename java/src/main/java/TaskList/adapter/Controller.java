@@ -1,7 +1,6 @@
 package TaskList.adapter;
 
 import TaskList.entity.ProjectName;
-import TaskList.io.Configuration;
 import TaskList.useCase.AddProjectUseCase;
 import TaskList.useCase.AddTaskUseCase;
 import TaskList.useCase.CheckAndUnCheckUseCase;

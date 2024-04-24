@@ -6,19 +6,13 @@ import TaskList.entity.TaskId;
 import static java.lang.System.lineSeparator;
 
 public class CheckAndUnCheckUseCase {
-    private GetProject getAllProject;
+    private SetTaskDone setTaskDone;
 
-    public CheckAndUnCheckUseCase(GetProject getAllProject) {
-        this.getAllProject = getAllProject;
+    public CheckAndUnCheckUseCase(SetTaskDone setTaskDone) {
+        this.setTaskDone = setTaskDone;
     }
 
     public String execute(String id, boolean done) {
-        for (Project project: getAllProject.getAllProject()) {
-            if (project.checkTaskExist(TaskId.of(id))) {
-                project.setTaskDone(TaskId.of(id), done);
-                return null;
-            }
-        }
-        return "Could not find a task with an ID of " + id + "." + lineSeparator();
+        return setTaskDone.setTaskDone(id, done);
     }
 }
